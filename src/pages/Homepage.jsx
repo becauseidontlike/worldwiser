@@ -8,7 +8,7 @@ function Homepage() {
       <h1>WORLDWISER</h1>
       {/* reloading
       <a href="/pricing">Pricing</a> */}
-      <Link to="/pricing">Pricing</Link>
+      <Link to="/app">App?</Link>
     </div>
   );
 }
