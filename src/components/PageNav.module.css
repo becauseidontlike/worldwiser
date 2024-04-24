@@ -7,3 +7,11 @@
   display: flex;
   justify-content: space-between;
 }
+
+:global(.test) {
+  background-color: lemonchiffon;
+}
+
+.nav :global(.active) {
+  background-color: grey;
+}

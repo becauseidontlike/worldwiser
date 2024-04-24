@@ -5,7 +5,7 @@ function Homepage() {
   return (
     <div>
       <PageNav />
-      <h1>WORLDWISER</h1>
+      <h1 className="test">WORLDWISER</h1>
       {/* reloading
       <a href="/pricing">Pricing</a> */}
       <Link to="/app">App?</Link>
