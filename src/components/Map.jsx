@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styles from "./Map.module.css";
 import {
@@ -15,10 +15,8 @@ import Button from "./Button";
 import { useUrlPosition } from "../hooks/useUrlPosition";
 
 function Map() {
-  const navigate = useNavigate();
   const { cities } = useCities();
-  const [searchParams] = useSearchParams();
-  const [mapPosition, setMapPosition] = useState([54.016, 17.092]);
+  const [mapPosition, setMapPosition] = useState([40, 0]);
   const {
     isLoading: isLoadingPosition,
     position: geolocationPosition,
@@ -46,7 +44,7 @@ function Map() {
   );
 
   return (
-    <div className={styles.mapContainer} onClick={() => navigate("form")}>
+    <div className={styles.mapContainer}>
       {!geolocationPosition && (
         <Button type="position" onClick={getPosition}>
           {isLoadingPosition ? "Loading..." : "Use your position"}
@@ -54,7 +52,7 @@ function Map() {
       )}
       <MapContainer
         center={mapPosition}
-        zoom={10}
+        zoom={8}
         scrollWheelZoom={true}
         className={styles.map}
       >
@@ -90,10 +88,7 @@ function ChangeCenter({ position }) {
 function DetectClick() {
   const navigate = useNavigate();
   useMapEvent({
-    click: (e) => {
-      console.log(e);
-      navigate(`form?lat=${e.latlng.lat}$lng=${e.latlng.lng}`);
-    },
+    click: (e) => navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`),
   });
 }
 

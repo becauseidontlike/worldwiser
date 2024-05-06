@@ -31,6 +31,8 @@ function Form() {
 
   useEffect(
     function () {
+      if (!lat && !lng) return;
+
       async function fetchCityData() {
         try {
           setIsLoadingGeocoding(true);
@@ -58,6 +60,9 @@ function Form() {
   );
 
   if (isLoadingGeocoding) return <Spinner />;
+
+  if (!lat && !lng)
+    return <Message message="Start by clicking somewhere on the map!" />;
 
   if (geocodingError) return <Message message={geocodingError} />;
 
