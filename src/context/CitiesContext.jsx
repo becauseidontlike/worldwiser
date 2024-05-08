@@ -1,24 +1,78 @@
-import { createContext, useState, useEffect, useContext } from "react";
+import {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  useReducer,
+} from "react";
 
 const base_url = "http://localhost:9000";
 const CitiesContext = createContext();
 
+const initialState = {
+  cities: [],
+  isLoading: false,
+  currentCity: {},
+  error: "",
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "loading":
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case "cities/loaded":
+      return {
+        ...state,
+        isLoading: false,
+        cities: action.payload,
+      };
+    case "cities/created":
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case "cities/deletes":
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case "rejected":
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      };
+    default:
+      throw new Error("Unknown action type");
+  }
+}
+
 function CitiesProvider({ children }) {
-  const [cities, setCities] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [currentCity, setCurrentCity] = useState({});
+  const [{ cities, isLoading, currentCity }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
+
+  // const [cities, setCities] = useState([]);
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [currentCity, setCurrentCity] = useState({});
 
   useEffect(function () {
     async function fetchCities() {
+      dispatch({ type: "loading" });
       try {
-        setIsLoading(true);
         const res = await fetch(`${base_url}/cities`);
         const data = await res.json();
-        setCities(data);
+        // setCities(data);
+        dispatch({ type: "cities/loaded", payload: data });
       } catch {
-        alert("there was an error...");
-      } finally {
-        setIsLoading(false);
+        dispatch({ type: "rejected", payload: "There was an error..." });
+        // } finally {
+        //   setIsLoading(false);
+        // }
       }
     }
     fetchCities();
