@@ -1,4 +1,4 @@
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styles from "./City.module.css";
 import { useCities } from "../context/CitiesContext";
 import { useEffect } from "react";
@@ -23,31 +23,10 @@ function City() {
     },
     [id]
   );
-  // const [searchParams, setSearchParams] = useSearchParams();
-
-  // const lat = searchParams.get("lat");
-  // const lng = searchParams.get("lng");
-  // // TEMP DATA
-  // const currentCity = {
-  //   cityName: "Lisbon",
-  //   emoji: "🇵🇹",
-  //   date: "2027-10-31T15:59:59.138Z",
-  //   notes: "My favorite city so far!",
-  // };
 
   const { cityName, emoji, date, notes } = currentCity;
 
   if (isLoading) return <Spinner />;
-  // return (
-  //   <>
-  //     <h1>
-  //       City {id}{" "}
-  //       <h3>
-  //         Position: {lat}, {lng}
-  //       </h3>
-  //     </h1>
-  //   </>
-  // );
 
   return (
     <div className={styles.city}>
