@@ -1,18 +1,31 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Product from "./pages/Product";
-import Pricing from "./pages/Pricing";
-import Homepage from "./pages/Homepage";
-import Pagenotfound from "./pages/Pagenotfound";
-import AppLayout from "./pages/AppLayout";
+import { CitiesProvider } from "./context/CitiesContext";
+import { AuthProvider } from "./context/FakeAuthContext";
+import { lazy } from "react";
 import "./index.css";
-import Login from "./pages/Login";
 import CityList from "./components/CityList";
 import CountryList from "./components/CountryList";
 import City from "./components/City";
 import Form from "./components/Form";
-import { CitiesProvider } from "./context/CitiesContext";
-import { AuthProvider } from "./context/FakeAuthContext";
+
 import ProtectedRoute from "./pages/ProtectedRoute";
+// import Product from "./pages/Product";
+// import Pricing from "./pages/Pricing";
+// import Homepage from "./pages/Homepage";
+// import PageNotFound from "./pages/PageNotFound";
+// import AppLayout from "./pages/AppLayout";
+// import Login from "./pages/Login";
+
+const Homepage = lazy(() => import("./pages/Homepage"));
+const Product = lazy(() => import("./pages/Product"));
+const Pricing = lazy(() => import("./pages/Pricing"));
+const PageNotFound = lazy(() => import("./pages/PageNotFound"));
+const AppLayout = lazy(() => import("./pages/AppLayout"));
+const Login = lazy(() => import("./pages/Login"));
+
+// npm run build
+// dist/assets/index-2df22f93.css   29.91 kB │ gzip:   5.03 kB
+// dist/assets/index-28b1f59b.js   515.30 kB │ gzip: 148.11 kB
 
 function App() {
   return (
@@ -38,7 +51,7 @@ function App() {
               <Route path="countries" element={<CountryList />} />
               <Route path="form" element={<Form />} />
             </Route>
-            <Route path="*" element={<Pagenotfound />} />
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>
       </CitiesProvider>
